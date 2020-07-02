@@ -225,15 +225,13 @@ function DataGrid<R, K extends keyof R>({
 
   useEffect(() => {
     if (!cellRangeSelection) return;
-
+    const dataGridComponent = document.getElementsByClassName('rdg-root')[0];
     function handleWindowMouseUp() {
       eventBus.dispatch(EventTypes.SELECT_END);
     }
-
-    window.addEventListener('mouseup', handleWindowMouseUp);
-
-    return () => {
-      window.removeEventListener('mouseup', handleWindowMouseUp);
+    dataGridComponent.addEventListener('mouseup', handleWindowMouseUp);
+    return function() {
+      dataGridComponent.removeEventListener('mouseup', handleWindowMouseUp);
     };
   }, [eventBus, cellRangeSelection]);
 
